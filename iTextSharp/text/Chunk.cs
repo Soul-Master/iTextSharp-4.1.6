@@ -9,7 +9,7 @@ using iTextSharp.text.factories;
 using iTextSharp.text.pdf.draw;
 
 /*
- * $Id: Chunk.cs,v 1.20 2008/05/13 11:25:09 psoares33 Exp $
+ * $Id: _Chunk.cs,v 1.20 2008/05/13 11:25:09 psoares33 Exp $
  * 
  *
  * Copyright 1999, 2000, 2001, 2002 by Bruno Lowagie.
@@ -63,43 +63,42 @@ namespace iTextSharp.text {
     /// This is the smallest significant part of text that can be added to a document.
     /// </summary>
     /// <remarks>
-    /// Most elements can be divided in one or more Chunks.
-    /// A chunk is a string with a certain Font.
+    /// Most elements can be divided in one or more _Chunks.
+    /// A _Chunk is a string with a certain Font.
     /// all other layoutparameters should be defined in the object to which
-    /// this chunk of text is added.
+    /// this _Chunk of text is added.
     /// </remarks>
     /// <example>
     /// <code>
-    /// <strong>Chunk chunk = new Chunk("Hello world", FontFactory.GetFont(FontFactory.COURIER, 20, Font.ITALIC, new Color(255, 0, 0)));</strong>
-    /// document.Add(chunk);
+    /// <strong>_Chunk _Chunk = new _Chunk("Hello world", FontFactory.GetFont(FontFactory.COURIER, 20, Font.ITALIC, new Color(255, 0, 0)));</strong>
+    /// document.Add(_Chunk);
     /// </code>
     /// </example>
-    public class Chunk : IElement {
+    public class _Chunk : IElement {
 
         // public static membervariables
 
         /** The character stand in for an image or a separator. */
         public const string OBJECT_REPLACEMENT_CHARACTER = "\ufffc";
 
-        ///<summary> This is a Chunk containing a newline. </summary>
-        public static readonly Chunk NEWLINE = new Chunk("\n");
+        ///<summary> This is a _Chunk containing a newline. </summary>
+        public static readonly _Chunk NEWLINE = new _Chunk("\n");
 
-    /** This is a Chunk containing a newpage. */
-        public static readonly Chunk NEXTPAGE = new Chunk("");
-        static Chunk() {
+    /** This is a _Chunk containing a newpage. */
+        public static readonly _Chunk NEXTPAGE = new _Chunk("");
+        static _Chunk() {
             NEXTPAGE.SetNewPage();
         }
-
-
+        
         // member variables
 
-        ///<summary> This is the content of this chunk of text. </summary>
+        ///<summary> This is the content of this _Chunk of text. </summary>
         protected StringBuilder content = null;
 
-        ///<summary> This is the Font of this chunk of text. </summary>
+        ///<summary> This is the Font of this _Chunk of text. </summary>
         protected Font font = null;
 
-        ///<summary> Contains some of the attributes for this Chunk. </summary>
+        ///<summary> Contains some of the attributes for this _Chunk. </summary>
         protected Hashtable attributes = null;
 
         // constructors
@@ -110,16 +109,16 @@ namespace iTextSharp.text {
         /// <overloads>
         /// Has six overloads.
         /// </overloads>
-	    public Chunk() {
+	    public _Chunk() {
 		    this.content = new StringBuilder();
 		    this.font = new Font();
 	    }
 
         /**
-        * A <CODE>Chunk</CODE> copy constructor.
-        * @param ck the <CODE>Chunk</CODE> to be copied
+        * A <CODE>_Chunk</CODE> copy constructor.
+        * @param ck the <CODE>_Chunk</CODE> to be copied
         */    
-        public Chunk(Chunk ck) {
+        public _Chunk(_Chunk ck) {
             if (ck.content != null) {
                 content = new StringBuilder(ck.content.ToString());
             }
@@ -129,48 +128,48 @@ namespace iTextSharp.text {
         }
         
         /// <summary>
-        /// Constructs a chunk of text with a certain content and a certain Font.
+        /// Constructs a _Chunk of text with a certain content and a certain Font.
         /// </summary>
         /// <param name="content">the content</param>
         /// <param name="font">the font</param>
-        public Chunk(string content, Font font) {
+        public _Chunk(string content, Font font) {
             this.content = new StringBuilder(content);
             this.font = font;
         }
 
         /// <summary>
-        /// Constructs a chunk of text with a certain content, without specifying a Font.
+        /// Constructs a _Chunk of text with a certain content, without specifying a Font.
         /// </summary>
         /// <param name="content">the content</param>
-        public Chunk(string content) : this(content, new Font()) {}
+        public _Chunk(string content) : this(content, new Font()) {}
 
         /**
-        * Constructs a chunk of text with a char and a certain <CODE>Font</CODE>.
+        * Constructs a _Chunk of text with a char and a certain <CODE>Font</CODE>.
         *
         * @param    c        the content
         * @param    font        the font
         */
-        public Chunk(char c, Font font) {
+        public _Chunk(char c, Font font) {
             this.content = new StringBuilder();
             this.content.Append(c);
             this.font = font;
         }
             
         /**
-        * Constructs a chunk of text with a char, without specifying a <CODE>Font</CODE>.
+        * Constructs a _Chunk of text with a char, without specifying a <CODE>Font</CODE>.
         *
         * @param    c        the content
         */
-        public Chunk(char c) : this(c, new Font()) {
+        public _Chunk(char c) : this(c, new Font()) {
         }
 
         /// <summary>
-        /// Constructs a chunk containing an Image.
+        /// Constructs a _Chunk containing an Image.
         /// </summary>
         /// <param name="image">the image</param>
         /// <param name="offsetX">the image offset in the x direction</param>
         /// <param name="offsetY">the image offset in the y direction</param>
-        public Chunk(Image image, float offsetX, float offsetY) : this(OBJECT_REPLACEMENT_CHARACTER, new Font()) {
+        public _Chunk(Image image, float offsetX, float offsetY) : this(OBJECT_REPLACEMENT_CHARACTER, new Font()) {
             Image copyImage = Image.GetInstance(image);
             copyImage.SetAbsolutePosition(float.NaN, float.NaN);
             SetAttribute(IMAGE, new Object[]{copyImage, offsetX, offsetY, false});
@@ -183,22 +182,22 @@ namespace iTextSharp.text {
         public const String SEPARATOR = "SEPARATOR";
         
         /**
-        * Creates a separator Chunk.
-        * Note that separator chunks can't be used in combination with tab chunks!
+        * Creates a separator _Chunk.
+        * Note that separator _Chunks can't be used in combination with tab _Chunks!
         * @param   separator   the drawInterface to use to draw the separator.
         * @since   2.1.2
         */
-        public Chunk(IDrawInterface separator) : this(separator, false) {
+        public _Chunk(IDrawInterface separator) : this(separator, false) {
         }   
         
         /**
-        * Creates a separator Chunk.
-        * Note that separator chunks can't be used in combination with tab chunks!
+        * Creates a separator _Chunk.
+        * Note that separator _Chunks can't be used in combination with tab _Chunks!
         * @param   separator   the drawInterface to use to draw the separator.
         * @param   vertical    true if this is a vertical separator
         * @since   2.1.2
         */
-        public Chunk(IDrawInterface separator, bool vertical) : this(OBJECT_REPLACEMENT_CHARACTER, new Font()) {
+        public _Chunk(IDrawInterface separator, bool vertical) : this(OBJECT_REPLACEMENT_CHARACTER, new Font()) {
             SetAttribute(SEPARATOR, new Object[] {separator, vertical});
         }
 
@@ -209,24 +208,24 @@ namespace iTextSharp.text {
         public const String TAB = "TAB";
         
         /**
-        * Creates a tab Chunk.
-        * Note that separator chunks can't be used in combination with tab chunks!
+        * Creates a tab _Chunk.
+        * Note that separator _Chunks can't be used in combination with tab _Chunks!
         * @param   separator   the drawInterface to use to draw the tab.
-        * @param   tabPosition an X coordinate that will be used as start position for the next Chunk.
+        * @param   tabPosition an X coordinate that will be used as start position for the next _Chunk.
         * @since   2.1.2
         */
-        public Chunk(IDrawInterface separator, float tabPosition) : this(separator, tabPosition, false) {
+        public _Chunk(IDrawInterface separator, float tabPosition) : this(separator, tabPosition, false) {
         }
         
         /**
-        * Creates a tab Chunk.
-        * Note that separator chunks can't be used in combination with tab chunks!
+        * Creates a tab _Chunk.
+        * Note that separator _Chunks can't be used in combination with tab _Chunks!
         * @param   separator   the drawInterface to use to draw the tab.
-        * @param   tabPosition an X coordinate that will be used as start position for the next Chunk.
+        * @param   tabPosition an X coordinate that will be used as start position for the next _Chunk.
         * @param   newline     if true, a newline will be added if the tabPosition has already been reached.
         * @since   2.1.2
         */
-        public Chunk(IDrawInterface separator, float tabPosition, bool newline) : this(OBJECT_REPLACEMENT_CHARACTER, new Font()) {
+        public _Chunk(IDrawInterface separator, float tabPosition, bool newline) : this(OBJECT_REPLACEMENT_CHARACTER, new Font()) {
             if (tabPosition < 0) {
                 throw new ArgumentException("A tab position may not be lower than 0; yours is " + tabPosition);
             }
@@ -234,13 +233,13 @@ namespace iTextSharp.text {
         }
 
         /// <summary>
-        /// Constructs a chunk containing an Image.
+        /// Constructs a _Chunk containing an Image.
         /// </summary>
         /// <param name="image">the image</param>
         /// <param name="offsetX">the image offset in the x direction</param>
         /// <param name="offsetY">the image offset in the y direction</param>
         /// <param name="changeLeading">true if the leading has to be adapted to the image</param>
-        public Chunk(Image image, float offsetX, float offsetY, bool changeLeading) : this(OBJECT_REPLACEMENT_CHARACTER, new Font()) {
+        public _Chunk(Image image, float offsetX, float offsetY, bool changeLeading) : this(OBJECT_REPLACEMENT_CHARACTER, new Font()) {
             SetAttribute(IMAGE, new Object[]{image, offsetX, offsetY, changeLeading});
         }
 
@@ -272,7 +271,7 @@ namespace iTextSharp.text {
         }
 
         /// <summary>
-        /// Gets all the chunks in this element.
+        /// Gets all the _Chunks in this element.
         /// </summary>
         /// <value>an ArrayList</value>
         public ArrayList Chunks {
@@ -286,7 +285,7 @@ namespace iTextSharp.text {
         // methods
 
         /// <summary>
-        /// appends some text to this Chunk.
+        /// appends some text to this _Chunk.
         /// </summary>
         /// <param name="str">a string</param>
         /// <returns>a StringBuilder</returns>
@@ -297,7 +296,7 @@ namespace iTextSharp.text {
         // methods to retrieve information
 
         /// <summary>
-        /// Get/set the font of this Chunk.
+        /// Get/set the font of this _Chunk.
         /// </summary>
         /// <value>a Font</value>
         public virtual Font Font {
@@ -312,7 +311,7 @@ namespace iTextSharp.text {
 
 
         /// <summary>
-        /// Returns the content of this Chunk.
+        /// Returns the content of this _Chunk.
         /// </summary>
         /// <value>a string</value>
         public virtual string Content {
@@ -327,15 +326,15 @@ namespace iTextSharp.text {
 
 
         /// <summary>
-        /// Checks is this Chunk is empty.
+        /// Checks is this _Chunk is empty.
         /// </summary>
-        /// <returns>false if the Chunk contains other characters than space.</returns>
+        /// <returns>false if the _Chunk contains other characters than space.</returns>
         public virtual bool IsEmpty() {
             return (content.ToString().Trim().Length == 0) && (content.ToString().IndexOf("\n") == -1) && (attributes == null);
         }
 
         /**
-        * Gets the width of the Chunk in points.
+        * Gets the width of the _Chunk in points.
         * @return a width in points
         */
         public float GetWidthPoint() {
@@ -346,7 +345,7 @@ namespace iTextSharp.text {
         }
     
         /// <summary>
-        /// Checks the attributes of this Chunk.
+        /// Checks the attributes of this _Chunk.
         /// </summary>
         /// <returns>false if there aren't any.</returns>
         public bool HasAttributes() {
@@ -354,7 +353,7 @@ namespace iTextSharp.text {
         }
 
         /// <summary>
-        /// Gets the attributes for this Chunk.
+        /// Gets the attributes for this _Chunk.
         /// </summary>
         /// <remarks>
         /// It may be null.
@@ -374,8 +373,8 @@ namespace iTextSharp.text {
         /// </summary>
         /// <param name="name">the key for the attribute</param>
         /// <param name="obj">the value of the attribute</param>
-        /// <returns>this Chunk</returns>
-        private Chunk SetAttribute(string name, Object obj) {
+        /// <returns>this _Chunk</returns>
+        private _Chunk SetAttribute(string name, Object obj) {
             if (attributes == null)
                 attributes = new Hashtable();
             attributes[name] = obj;
@@ -389,9 +388,9 @@ namespace iTextSharp.text {
         * Sets the text horizontal scaling. A value of 1 is normal and a value of 0.5f
         * shrinks the text to half it's width.
         * @param scale the horizontal scaling factor
-        * @return this <CODE>Chunk</CODE>
+        * @return this <CODE>_Chunk</CODE>
         */    
-        public Chunk SetHorizontalScaling(float scale) {
+        public _Chunk SetHorizontalScaling(float scale) {
             return SetAttribute(HSCALE, scale);
         }
         
@@ -414,20 +413,20 @@ namespace iTextSharp.text {
         /**
         * Sets an horizontal line that can be an underline or a strikethrough.
         * Actually, the line can be anywhere vertically and has always the
-        * <CODE>Chunk</CODE> width. Multiple call to this method will
+        * <CODE>_Chunk</CODE> width. Multiple call to this method will
         * produce multiple lines.
         * @param thickness the absolute thickness of the line
         * @param yPosition the absolute y position relative to the baseline
-        * @return this <CODE>Chunk</CODE>
+        * @return this <CODE>_Chunk</CODE>
         */    
-        public Chunk SetUnderline(float thickness, float yPosition) {
+        public _Chunk SetUnderline(float thickness, float yPosition) {
             return SetUnderline(null, thickness, 0f, yPosition, 0f, PdfContentByte.LINE_CAP_BUTT);
         }
 
         /**
         * Sets an horizontal line that can be an underline or a strikethrough.
         * Actually, the line can be anywhere vertically and has always the
-        * <CODE>Chunk</CODE> width. Multiple call to this method will
+        * <CODE>_Chunk</CODE> width. Multiple call to this method will
         * produce multiple lines.
         * @param color the color of the line or <CODE>null</CODE> to follow
         * the text color
@@ -438,9 +437,9 @@ namespace iTextSharp.text {
         * @param cap the end line cap. Allowed values are
         * PdfContentByte.LINE_CAP_BUTT, PdfContentByte.LINE_CAP_ROUND and
         * PdfContentByte.LINE_CAP_PROJECTING_SQUARE
-        * @return this <CODE>Chunk</CODE>
+        * @return this <CODE>_Chunk</CODE>
         */    
-        public Chunk SetUnderline(Color color, float thickness, float thicknessMul, float yPosition, float yPositionMul, int cap) {
+        public _Chunk SetUnderline(Color color, float thickness, float thicknessMul, float yPosition, float yPositionMul, int cap) {
             if (attributes == null)
                 attributes = new Hashtable();
             Object[] obj = {color, new float[]{thickness, thicknessMul, yPosition, yPositionMul, (float)cap}};
@@ -459,8 +458,8 @@ namespace iTextSharp.text {
         /// It can be used to implement sub/basescript.
         /// </remarks>
         /// <param name="rise">the displacement in points</param>
-        /// <returns>this Chunk</returns>
-        public Chunk SetTextRise(float rise) {
+        /// <returns>this _Chunk</returns>
+        public _Chunk SetTextRise(float rise) {
             return SetAttribute(SUBSUPSCRIPT, rise);
         }
 
@@ -479,9 +478,9 @@ namespace iTextSharp.text {
         * Try <CODE>alpha=0</CODE> and <CODE>beta=12</CODE>.
         * @param alpha the first angle in degrees
         * @param beta the second angle in degrees
-        * @return this <CODE>Chunk</CODE>
+        * @return this <CODE>_Chunk</CODE>
         */    
-        public Chunk SetSkew(float alpha, float beta) {
+        public _Chunk SetSkew(float alpha, float beta) {
             alpha = (float)Math.Tan(alpha * Math.PI / 180);
             beta = (float)Math.Tan(beta * Math.PI / 180);
             return SetAttribute(SKEW, new float[]{alpha, beta});
@@ -491,23 +490,23 @@ namespace iTextSharp.text {
         public const string BACKGROUND = "BACKGROUND";
 
         /// <summary>
-        /// Sets the color of the background Chunk.
+        /// Sets the color of the background _Chunk.
         /// </summary>
         /// <param name="color">the color of the background</param>
-        /// <returns>this Chunk</returns>
-        public Chunk SetBackground(Color color) {
+        /// <returns>this _Chunk</returns>
+        public _Chunk SetBackground(Color color) {
             return SetBackground(color, 0, 0, 0, 0);
         }
 
-        /** Sets the color and the size of the background <CODE>Chunk</CODE>.
+        /** Sets the color and the size of the background <CODE>_Chunk</CODE>.
         * @param color the color of the background
         * @param extraLeft increase the size of the rectangle in the left
         * @param extraBottom increase the size of the rectangle in the bottom
         * @param extraRight increase the size of the rectangle in the right
         * @param extraTop increase the size of the rectangle in the top
-        * @return this <CODE>Chunk</CODE>
+        * @return this <CODE>_Chunk</CODE>
         */
-        public Chunk SetBackground(Color color, float extraLeft, float extraBottom, float extraRight, float extraTop) {
+        public _Chunk SetBackground(Color color, float extraLeft, float extraBottom, float extraRight, float extraTop) {
             return SetAttribute(BACKGROUND, new Object[]{color, new float[]{extraLeft, extraBottom, extraRight, extraTop}});
         }
 
@@ -522,9 +521,9 @@ namespace iTextSharp.text {
         * @param strokeWidth the stroke line width for the modes <CODE>PdfContentByte.TEXT_RENDER_MODE_STROKE</CODE> and
         * <CODE>PdfContentByte.TEXT_RENDER_MODE_FILL_STROKE</CODE>.
         * @param strokeColor the stroke color or <CODE>null</CODE> to follow the text color
-        * @return this <CODE>Chunk</CODE>
+        * @return this <CODE>_Chunk</CODE>
         */    
-        public Chunk SetTextRenderMode(int mode, float strokeWidth, Color strokeColor) {
+        public _Chunk SetTextRenderMode(int mode, float strokeWidth, Color strokeColor) {
             return SetAttribute(TEXTRENDERMODE, new Object[]{mode, strokeWidth, strokeColor});
         }
 
@@ -535,8 +534,8 @@ namespace iTextSharp.text {
         /// Sets the split characters.
         /// </summary>
         /// <param name="splitCharacter">the SplitCharacter interface</param>
-        /// <returns>this Chunk</returns>
-        public Chunk SetSplitCharacter(ISplitCharacter splitCharacter) {
+        /// <returns>this _Chunk</returns>
+        public _Chunk SetSplitCharacter(ISplitCharacter splitCharacter) {
             return SetAttribute(SPLITCHARACTER, splitCharacter);
         }
 
@@ -544,11 +543,11 @@ namespace iTextSharp.text {
         public const string HYPHENATION = "HYPHENATION";
 
         /// <summary>
-        /// sets the hyphenation engine to this Chunk.
+        /// sets the hyphenation engine to this _Chunk.
         /// </summary>
         /// <param name="hyphenation">the hyphenation engine</param>
-        /// <returns>this Chunk</returns>
-        public Chunk SetHyphenation(IHyphenationEvent hyphenation) {
+        /// <returns>this _Chunk</returns>
+        public _Chunk SetHyphenation(IHyphenationEvent hyphenation) {
             return SetAttribute(HYPHENATION, hyphenation);
         }
 
@@ -556,22 +555,22 @@ namespace iTextSharp.text {
         public const string REMOTEGOTO = "REMOTEGOTO";
 
         /// <summary>
-        /// Sets a goto for a remote destination for this Chunk.
+        /// Sets a goto for a remote destination for this _Chunk.
         /// </summary>
         /// <param name="filename">the file name of the destination document</param>
         /// <param name="name">the name of the destination to go to</param>
-        /// <returns>this Chunk</returns>
-        public Chunk SetRemoteGoto(string filename, string name) {
+        /// <returns>this _Chunk</returns>
+        public _Chunk SetRemoteGoto(string filename, string name) {
             return SetAttribute(REMOTEGOTO, new Object[]{filename, name});
         }
 
         /// <summary>
-        /// Sets a goto for a remote destination for this Chunk.
+        /// Sets a goto for a remote destination for this _Chunk.
         /// </summary>
         /// <param name="filename">the file name of the destination document</param>
         /// <param name="page">the page of the destination to go to. First page is 1</param>
-        /// <returns>this Chunk</returns>
-        public Chunk SetRemoteGoto(string filename, int page) {
+        /// <returns>this _Chunk</returns>
+        public _Chunk SetRemoteGoto(string filename, int page) {
             return SetAttribute(REMOTEGOTO, new Object[]{filename, page});
         }
 
@@ -579,14 +578,14 @@ namespace iTextSharp.text {
         public const string LOCALGOTO = "LOCALGOTO";
 
         /// <summary>
-        /// Sets a local goto for this Chunk.
+        /// Sets a local goto for this _Chunk.
         /// </summary>
         /// <remarks>
         /// There must be a local destination matching the name.
         /// </remarks>
         /// <param name="name">the name of the destination to go to</param>
-        /// <returns>this Chunk</returns>
-        public Chunk SetLocalGoto(string name) {
+        /// <returns>this _Chunk</returns>
+        public _Chunk SetLocalGoto(string name) {
             return SetAttribute(LOCALGOTO, name);
         }
 
@@ -594,11 +593,11 @@ namespace iTextSharp.text {
         public const string LOCALDESTINATION = "LOCALDESTINATION";
 
         /// <summary>
-        /// Sets a local destination for this Chunk.
+        /// Sets a local destination for this _Chunk.
         /// </summary>
         /// <param name="name">the name for this destination</param>
-        /// <returns>this Chunk</returns>
-        public Chunk SetLocalDestination(string name) {
+        /// <returns>this _Chunk</returns>
+        public _Chunk SetLocalDestination(string name) {
             return SetAttribute(LOCALDESTINATION, name);
         }
 
@@ -606,14 +605,14 @@ namespace iTextSharp.text {
         public const string GENERICTAG = "GENERICTAG";
 
         /// <summary>
-        /// Sets the generic tag Chunk.
+        /// Sets the generic tag _Chunk.
         /// </summary>
         /// <remarks>
         /// The text for this tag can be retrieved with PdfPageEvent.
         /// </remarks>
         /// <param name="text">the text for the tag</param>
-        /// <returns>this Chunk</returns>
-        public Chunk SetGenericTag(string text) {
+        /// <returns>this _Chunk</returns>
+        public _Chunk SetGenericTag(string text) {
             return SetAttribute(GENERICTAG, text);
         }
 
@@ -626,7 +625,7 @@ namespace iTextSharp.text {
         /// <value>an Image</value>
         public Image GetImage() {
             if (attributes == null) return null;
-            Object[] obj = (Object[])attributes[Chunk.IMAGE];
+            Object[] obj = (Object[])attributes[_Chunk.IMAGE];
             if (obj == null)
                 return null;
             else {
@@ -647,29 +646,29 @@ namespace iTextSharp.text {
         public const string ACTION = "ACTION";
 
         /// <summary>
-        /// Sets an action for this Chunk.
+        /// Sets an action for this _Chunk.
         /// </summary>
         /// <param name="action">the action</param>
-        /// <returns>this Chunk</returns>
-        public Chunk SetAction(PdfAction action) {
+        /// <returns>this _Chunk</returns>
+        public _Chunk SetAction(PdfAction action) {
             return SetAttribute(ACTION, action);
         }
 
         /// <summary>
-        /// Sets an anchor for this Chunk.
+        /// Sets an anchor for this _Chunk.
         /// </summary>
         /// <param name="url">the Uri to link to</param>
-        /// <returns>this Chunk</returns>
-        public Chunk SetAnchor(Uri url) {
+        /// <returns>this _Chunk</returns>
+        public _Chunk SetAnchor(Uri url) {
             return SetAttribute(ACTION, new PdfAction(url));
         }
 
         /// <summary>
-        /// Sets an anchor for this Chunk.
+        /// Sets an anchor for this _Chunk.
         /// </summary>
         /// <param name="url">the url to link to</param>
-        /// <returns>this Chunk</returns>
-        public Chunk SetAnchor(string url) {
+        /// <returns>this _Chunk</returns>
+        public _Chunk SetAnchor(string url) {
             return SetAttribute(ACTION, new PdfAction(url));
         }
 
@@ -679,8 +678,8 @@ namespace iTextSharp.text {
         /// <summary>
         /// Sets a new page tag.
         /// </summary>
-        /// <returns>this Chunk</returns>
-        public Chunk SetNewPage() {
+        /// <returns>this _Chunk</returns>
+        public _Chunk SetNewPage() {
             return SetAttribute(NEWPAGE, null);
         }
 
@@ -688,11 +687,11 @@ namespace iTextSharp.text {
         public const string PDFANNOTATION = "PDFANNOTATION";
 
         /// <summary>
-        /// Sets a generic annotation to this Chunk.
+        /// Sets a generic annotation to this _Chunk.
         /// </summary>
         /// <param name="annotation">the annotation</param>
-        /// <returns>this Chunk</returns>
-        public Chunk SetAnnotation(PdfAnnotation annotation) {
+        /// <returns>this _Chunk</returns>
+        public _Chunk SetAnnotation(PdfAnnotation annotation) {
             return SetAttribute(PDFANNOTATION, annotation);
         }
 
@@ -719,10 +718,10 @@ namespace iTextSharp.text {
         */
         public IHyphenationEvent GetHyphenation() {
             if (attributes == null) return null;
-            return (IHyphenationEvent) attributes[Chunk.HYPHENATION];
+            return (IHyphenationEvent) attributes[_Chunk.HYPHENATION];
         }
 
-        // keys used in PdfChunk
+        // keys used in Pdf_Chunk
 
         ///<summary> Key for color. </summary>
         public const string COLOR = "COLOR";
